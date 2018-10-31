@@ -11,7 +11,8 @@ public class LibraryUserInfo implements UserInfo {
 
     @Override
     public String toString() {
-        return getClass().getName() + "@username: " + username + ", passwordDigest: " + passwordDigest;
+        return getClass().getName() + "@username: " + username + ", passwordDigest: " + passwordDigest + ", userRole: "
+                + userRole.toString();
     }
 
     @Override
@@ -27,12 +28,13 @@ public class LibraryUserInfo implements UserInfo {
 
         libraryUserInfo = (LibraryUserInfo) o;
         return Objects.equals(libraryUserInfo.passwordDigest, passwordDigest)
-                && Objects.equals(libraryUserInfo.username, username);
+                && Objects.equals(libraryUserInfo.username, username)
+                && Objects.equals(libraryUserInfo.userRole, userRole);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, passwordDigest);
+        return Objects.hash(username, passwordDigest, userRole);
     }
 
     @Override
@@ -56,6 +58,7 @@ public class LibraryUserInfo implements UserInfo {
         {
             throw new IllegalArgumentException("Constructor parameters shouldn't be null");
         }
+
         this.username = new String(username);
         this.passwordDigest = new String(passwordDigest);
         this.userRole = userRole;

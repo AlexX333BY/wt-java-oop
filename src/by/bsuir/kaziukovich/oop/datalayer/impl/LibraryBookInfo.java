@@ -4,6 +4,7 @@ import by.bsuir.kaziukovich.oop.datalayer.BookInfo;
 import by.bsuir.kaziukovich.oop.datalayer.BookType;
 import by.bsuir.kaziukovich.oop.datalayer.IllegalIsbnException;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LibraryBookInfo implements BookInfo {
@@ -33,6 +34,33 @@ public class LibraryBookInfo implements BookInfo {
     @Override
     public BookType getBookType() {
         return bookType;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName() + "@isbn: " + isbn + ", author: " + author + ", title: " + title + ", bookType: "
+                + bookType.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        LibraryBookInfo libraryBookInfo;
+
+        if (o == this) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+
+        libraryBookInfo = (LibraryBookInfo) o;
+        return Objects.equals(libraryBookInfo.author, author) && Objects.equals(libraryBookInfo.bookType, bookType)
+                && Objects.equals(libraryBookInfo.isbn, isbn) && Objects.equals(libraryBookInfo.title, title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(author, bookType, isbn, title);
     }
 
     private static boolean isIsbnCorrect(String isbn) {
