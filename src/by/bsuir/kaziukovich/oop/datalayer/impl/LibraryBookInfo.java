@@ -3,7 +3,6 @@ package by.bsuir.kaziukovich.oop.datalayer.impl;
 import by.bsuir.kaziukovich.oop.datalayer.BookInfo;
 import by.bsuir.kaziukovich.oop.datalayer.BookType;
 import by.bsuir.kaziukovich.oop.datalayer.IllegalIsbnException;
-
 import java.util.Objects;
 import java.util.regex.Pattern;
 
