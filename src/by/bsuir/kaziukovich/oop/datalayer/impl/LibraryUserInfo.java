@@ -1,13 +1,13 @@
 package by.bsuir.kaziukovich.oop.datalayer.impl;
 
-import by.bsuir.kaziukovich.oop.datalayer.Role;
+import by.bsuir.kaziukovich.oop.datalayer.UserRole;
 import by.bsuir.kaziukovich.oop.datalayer.UserInfo;
 import java.util.Objects;
 
 public class LibraryUserInfo implements UserInfo {
     private final String username;
     private final String passwordDigest;
-    private final Role role;
+    private final UserRole userRole;
 
     @Override
     public String toString() {
@@ -46,11 +46,11 @@ public class LibraryUserInfo implements UserInfo {
     }
 
     @Override
-    public Role getRole() {
-        return role;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    protected LibraryUserInfo(String username, String passwordDigest, Role role)
+    LibraryUserInfo(String username, String passwordDigest, UserRole userRole)
     {
         if ((username == null) || (passwordDigest == null))
         {
@@ -58,6 +58,6 @@ public class LibraryUserInfo implements UserInfo {
         }
         this.username = new String(username);
         this.passwordDigest = new String(passwordDigest);
-        this.role = role;
+        this.userRole = userRole;
     }
 }

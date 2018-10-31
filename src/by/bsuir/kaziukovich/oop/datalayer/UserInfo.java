@@ -5,5 +5,5 @@ public interface UserInfo {
 
     String getUsername();
 
-    Role getRole();
+    UserRole getUserRole();
 }

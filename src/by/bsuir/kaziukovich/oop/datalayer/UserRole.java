@@ -1,6 +1,6 @@
 package by.bsuir.kaziukovich.oop.datalayer;
 
-public enum Role {
+public enum UserRole {
     ADMIN,
     USER
 }
