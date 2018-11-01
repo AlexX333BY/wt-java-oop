@@ -39,12 +39,12 @@ public class LibraryUserInfo implements UserInfo {
 
     @Override
     public String getPasswordDigest() {
-        return new String(passwordDigest);
+        return passwordDigest;
     }
 
     @Override
     public String getUsername() {
-        return new String(username);
+        return username;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class LibraryUserInfo implements UserInfo {
             throw new IllegalArgumentException("Constructor parameters shouldn't be null");
         }
 
-        this.username = new String(username);
-        this.passwordDigest = new String(passwordDigest);
+        this.username = username;
+        this.passwordDigest = passwordDigest;
         this.userRole = userRole;
     }
 }

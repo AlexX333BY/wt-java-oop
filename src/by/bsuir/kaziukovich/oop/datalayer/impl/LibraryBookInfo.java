@@ -17,17 +17,17 @@ public class LibraryBookInfo implements BookInfo {
 
     @Override
     public String getTitle() {
-        return new String(title);
+        return title;
     }
 
     @Override
     public String getAuthor() {
-        return new String(author);
+        return author;
     }
 
     @Override
     public String getIsbn() {
-        return new String(isbn);
+        return isbn;
     }
 
     @Override
@@ -99,9 +99,9 @@ public class LibraryBookInfo implements BookInfo {
             throw new IllegalIsbnException(isbn +  " isn't modern nor legacy ISBN");
         }
 
-        this.title = new String(title);
-        this.author = new String(author);
+        this.title = title;
+        this.author = author;
         this.bookType = bookType;
-        this.isbn = new String(isbn);
+        this.isbn = isbn;
     }
 }
