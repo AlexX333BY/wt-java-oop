@@ -1,7 +1,7 @@
-package by.bsuir.kaziukovich.oop.datalayer.impl;
+package by.bsuir.kaziukovich.oop.datalayer.info.user.impl;
 
-import by.bsuir.kaziukovich.oop.datalayer.UserRole;
-import by.bsuir.kaziukovich.oop.datalayer.UserInfo;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
 import java.util.Objects;
 
 /**
@@ -97,7 +97,7 @@ public class LibraryUserInfo implements UserInfo {
      * @param passwordDigest New user password digest
      * @param userRole New user role
      */
-    LibraryUserInfo(String username, String passwordDigest, UserRole userRole)
+    public LibraryUserInfo(String username, String passwordDigest, UserRole userRole)
     {
         if ((username == null) || (passwordDigest == null))
         {

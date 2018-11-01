@@ -1,8 +1,8 @@
-package by.bsuir.kaziukovich.oop.datalayer.impl;
+package by.bsuir.kaziukovich.oop.datalayer.info.book.impl;
 
-import by.bsuir.kaziukovich.oop.datalayer.BookInfo;
-import by.bsuir.kaziukovich.oop.datalayer.BookType;
-import by.bsuir.kaziukovich.oop.datalayer.IllegalIsbnException;
+import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
+import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
+import by.bsuir.kaziukovich.oop.datalayer.info.book.IllegalIsbnException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -154,7 +154,7 @@ public class LibraryBookInfo implements BookInfo {
      * @param isbn New book ISBN
      * @param bookType New book type
      */
-    LibraryBookInfo(String title, String author, String isbn, BookType bookType)
+    public LibraryBookInfo(String title, String author, String isbn, BookType bookType)
     {
         if ((title == null) || (isbn == null) || (author == null))
         {

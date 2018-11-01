@@ -1,7 +1,9 @@
-package by.bsuir.kaziukovich.oop.datalayer;
+package by.bsuir.kaziukovich.oop.datalayer.readerwriter;
 
-import by.bsuir.kaziukovich.oop.datalayer.impl.LibraryBookInfoFileReaderWriter;
-import by.bsuir.kaziukovich.oop.datalayer.impl.LibraryUserInfoFileReaderWriter;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.bookinfo.BookInfoReaderWriter;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.UserInfoReaderWriter;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.bookinfo.impl.LibraryBookInfoFileReaderWriter;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.impl.LibraryUserInfoFileReaderWriter;
 
 /**
  * Factory class for creating InfoReaderWriter instances

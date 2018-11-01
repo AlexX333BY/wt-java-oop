@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.datalayer;
+package by.bsuir.kaziukovich.oop.datalayer.info.user;
 
 /**
  * Interface of class representing user information

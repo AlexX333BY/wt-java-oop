@@ -1,6 +1,12 @@
-package by.bsuir.kaziukovich.oop.datalayer.impl;
+package by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.impl;
 
-import by.bsuir.kaziukovich.oop.datalayer.*;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.impl.LibraryUserInfo;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.InfoReadException;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.InfoWriteException;
+import by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.UserInfoReaderWriter;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

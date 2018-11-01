@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.datalayer;
+package by.bsuir.kaziukovich.oop.datalayer.info.book;
 
 /**
  * Exception to be thrown if illegal ISBN is given as argument
