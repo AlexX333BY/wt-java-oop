@@ -104,7 +104,7 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
                 + bookTypeGroupName + ", isbnGroupName: " + isbnGroupName + ", delimiter: " + delimiter;
     }
 
-    LibraryBookInfoFileReaderWriter() {
+    public LibraryBookInfoFileReaderWriter() {
         authorGroupName = "author";
         titleGroupName = "title";
         bookTypeGroupName = "type";

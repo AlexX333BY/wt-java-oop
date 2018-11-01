@@ -101,7 +101,7 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
                 + userRoleGroupName + ", delimiter: " + delimiter;
     }
 
-    LibraryUserInfoFileReaderWriter() {
+    public LibraryUserInfoFileReaderWriter() {
         usernameGroupName = "username";
         passwordDigestGroupName = "digest";
         userRoleGroupName = "role";
