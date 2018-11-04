@@ -11,6 +11,7 @@ import by.bsuir.kaziukovich.oop.datalayer.readerwriter.InfoReadWriteException;
 import by.bsuir.kaziukovich.oop.datalayer.readerwriter.ReaderWriterFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * UserDao implementation
@@ -172,6 +173,47 @@ public class LibraryUserDao implements UserDao {
         return new ArrayList<>(users);
     }
 
+    /**
+     * Creates string representation of object
+     * @return String representation of object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "@books: " + users.toString() + ", path: " + path;
+    }
+
+    /**
+     * Compares current object to another
+     * @param o Object to compare with
+     * @return True if objects are same, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        LibraryUserDao libraryBookDao;
+
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+
+        libraryBookDao = (LibraryUserDao) o;
+        return Objects.equals(users, libraryBookDao.users) && Objects.equals(path, libraryBookDao.path);
+    }
+
+    /**
+     * Generates hash code of object
+     * @return Hash code of object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(users, path);
+    }
+
+    /**
+     * Default constructor with initializing fields
+     */
     public LibraryUserDao() {
         path = null;
         users = new ArrayList<>();
