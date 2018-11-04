@@ -13,10 +13,9 @@ public interface UserDao extends Dao<UserInfo> {
      * Creates and adds new user struct with base role
      * @param username Username of new user
      * @param password Password of new user
-     * @return New user struct
      * @throws ExistanceException In case of existance of user with same name
      */
-    void createNewUser(String username, String password) throws ExistanceException;
+    void addNewUser(String username, String password) throws ExistanceException;
 
     /**
      * Deletes user with specified username

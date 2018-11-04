@@ -92,6 +92,16 @@ public class LibraryUserInfo implements UserInfo {
     }
 
     /**
+     * Compares two users by username
+     * @param user User to compare to this user
+     * @return A negative integer, zero, or a positive integer as this user is less than, equal to, or greater than the specified user
+     */
+    @Override
+    public int compareTo(UserInfo user) {
+        return username.compareToIgnoreCase(user.getUsername());
+    }
+
+    /**
      * Constructor of user info instance
      * @param username New username
      * @param passwordDigest New user password digest
@@ -104,18 +114,8 @@ public class LibraryUserInfo implements UserInfo {
             throw new IllegalArgumentException("Constructor parameters shouldn't be null");
         }
 
-        this.username = username;
+        this.username = username.toLowerCase();
         this.passwordDigest = passwordDigest;
         this.userRole = userRole;
-    }
-
-    /**
-     * Compares two users by username
-     * @param user User to compare to this user
-     * @return A negative integer, zero, or a positive integer as this user is less than, equal to, or greater than the specified user
-     */
-    @Override
-    public int compareTo(UserInfo user) {
-        return username.compareToIgnoreCase(user.getUsername());
     }
 }

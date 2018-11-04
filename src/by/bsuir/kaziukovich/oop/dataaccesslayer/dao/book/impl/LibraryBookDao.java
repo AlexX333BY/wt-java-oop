@@ -22,7 +22,7 @@ public class LibraryBookDao implements BookDao {
     private List<BookInfo> books;
 
     /**
-     * Path where books where loaded
+     * Path where books were loaded
      */
     private String path;
 
