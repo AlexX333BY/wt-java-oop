@@ -108,4 +108,14 @@ public class LibraryUserInfo implements UserInfo {
         this.passwordDigest = passwordDigest;
         this.userRole = userRole;
     }
+
+    /**
+     * Compares two users by username
+     * @param user User to compare to this user
+     * @return A negative integer, zero, or a positive integer as this user is less than, equal to, or greater than the specified user
+     */
+    @Override
+    public int compareTo(UserInfo user) {
+        return username.compareToIgnoreCase(user.getUsername());
+    }
 }

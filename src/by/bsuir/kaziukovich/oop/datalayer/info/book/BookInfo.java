@@ -3,7 +3,7 @@ package by.bsuir.kaziukovich.oop.datalayer.info.book;
 /**
  * Interface of class representing book information
  */
-public interface BookInfo {
+public interface BookInfo extends Comparable<BookInfo> {
     /**
      * Getter for book title
      * @return Book title

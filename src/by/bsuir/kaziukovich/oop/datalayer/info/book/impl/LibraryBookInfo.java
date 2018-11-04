@@ -38,7 +38,7 @@ public class LibraryBookInfo implements BookInfo {
     /**
      * Parts of legacy ISBN
      */
-    private final static byte LEGACY_ISBN_PARTS = 4;
+    private final static byte LEGACY_ISBN_PARTS = MODERN_ISBN_PARTS - 1;
 
     /**
      * Getter for book title
@@ -145,6 +145,50 @@ public class LibraryBookInfo implements BookInfo {
                 && splittedIsbn[1 + indent].matches("^\\d{2,7}$")
                 && splittedIsbn[2 + indent].matches("^\\d{1,6}$")
                 && splittedIsbn[3 + indent].matches("^[0-9X]$");
+    }
+
+    /**
+     * Splits ISBN string to int array
+     * @param isbn ISBN string
+     * @return Splitted ISBN
+     */
+    private static int[] splitIsbnToInt(String isbn) {
+        final int DEFAULT_ISBN_FIRST_PART = 978;
+        int[] result = new int[MODERN_ISBN_PARTS];
+        String[] splittedIsbn = isbn.replace("X", "10").split("-");
+        int indent = 0;
+
+        /* handling old 4-part ISBN */
+        if (splittedIsbn.length == LEGACY_ISBN_PARTS) {
+            result[0] = DEFAULT_ISBN_FIRST_PART;
+            indent = 1;
+        }
+        for (int i = indent; i < MODERN_ISBN_PARTS; i++) {
+            result[i] = Integer.parseInt(splittedIsbn[i - indent]);
+        }
+
+        return result;
+    }
+
+    /**
+     * Compares two books by ISBN
+     * @param book Book to compare to this book
+     * @return A negative integer, zero, or a positive integer as this book is less than, equal to, or greater than the specified book
+     */
+    @Override
+    public int compareTo(BookInfo book) {
+        int[] thisIsbn = splitIsbnToInt(isbn), otherIsbn;
+        int compareResult = 0;
+
+        if (book == null) {
+            throw new IllegalArgumentException("Book shouldn't be null");
+        }
+
+        otherIsbn = splitIsbnToInt(book.getIsbn());
+        for (int i = 0; (i < MODERN_ISBN_PARTS) && (compareResult == 0); i++) {
+            compareResult = Integer.compare(thisIsbn[i], otherIsbn[i]);
+        }
+        return compareResult;
     }
 
     /**

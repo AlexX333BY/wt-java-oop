@@ -3,7 +3,7 @@ package by.bsuir.kaziukovich.oop.datalayer.info.user;
 /**
  * Interface of class representing user information
  */
-public interface UserInfo {
+public interface UserInfo extends Comparable<UserInfo> {
     /**
      * Getter for user password digest
      * @return User password digest
