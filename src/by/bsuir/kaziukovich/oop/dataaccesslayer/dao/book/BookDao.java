@@ -10,15 +10,14 @@ import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
  */
 public interface BookDao extends Dao<BookInfo> {
     /**
-     * Creates new book struct
+     * Creates and adds new book struct
      * @param title Title of new book
      * @param author Author of new book
      * @param isbn ISBN of new book
      * @param bookType Type of new book
-     * @return New book struct
      * @throws ExistanceException In case of book existance with same ISBN
      */
-    BookInfo createNewBook(String title, String author, String isbn, BookType bookType) throws ExistanceException;
+    void addNewBook(String title, String author, String isbn, BookType bookType) throws ExistanceException;
 
     /**
      * Deletes book with specified ISBN
