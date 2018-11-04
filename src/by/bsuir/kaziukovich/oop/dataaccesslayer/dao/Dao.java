@@ -10,7 +10,7 @@ public interface Dao<I> {
      * Updates data in storage
      * @throws StorageException In case if update is impossible (e.g. read-write error)
      */
-    void updateData() throws StorageException;
+    void updateData() throws StorageException, NeverLoadedException;
 
     /**
      * Loads data by specified path
