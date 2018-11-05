@@ -17,7 +17,7 @@ public class DeleteBookCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data
+     * @param request Command request data. 1 argument required: ISBN
      * @return Command response
      * @throws CommandException In case of any command execution error
      */

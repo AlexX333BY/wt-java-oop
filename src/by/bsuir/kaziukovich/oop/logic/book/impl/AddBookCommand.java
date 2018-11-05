@@ -29,7 +29,8 @@ public class AddBookCommand implements Command {
         }
 
         try {
-            BookDaoFactory.getBookDao().addNewBook(request[0], request[1], request[2], BookType.valueOf(request[3]));
+            BookDaoFactory.getBookDao().addNewBook(request[0], request[1], request[2],
+                    BookType.valueOf(request[3].toUpperCase()));
         } catch (ExistanceException e) {
             throw new CommandException("Error executing AddBook command", e);
         }
