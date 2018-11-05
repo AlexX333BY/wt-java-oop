@@ -15,7 +15,7 @@ public class GetAllBooksCommand implements Command {
     /**
      * Optional arguments count for command
      */
-    public final static byte OPTIONAL_AGUMENTS = 1;
+    public final static byte OPTIONAL_ARGUMENTS = 1;
 
     /**
      * Required arguments count for command
@@ -40,7 +40,7 @@ public class GetAllBooksCommand implements Command {
         String[] result = new String[books.size() + 1];
         BookInfo curBook;
 
-        if ((request != null) && (request.length > REQUIRED_ARGUMENTS)) {
+        if ((request != null) && (request.length == REQUIRED_ARGUMENTS + OPTIONAL_ARGUMENTS)) {
             delimiter = request[0];
         }
         result[0] = CommandResponse.SUCCESS_RESPONSE;

@@ -20,9 +20,14 @@ public enum UserCommandName {
     ADD_USER,
 
     /**
-     * Updates user info
+     * Updates user password digest
      */
-    UPDATE_USER,
+    UPDATE_USER_PASSWORD,
+
+    /**
+     * Updates user role
+     */
+    UPDATE_USER_ROLE,
 
     /**
      * Deletes user
@@ -32,5 +37,15 @@ public enum UserCommandName {
     /**
      * Checks user password digest
      */
-    CHECK_PASSWORD_DIGEST
+    CHECK_PASSWORD_DIGEST,
+
+    /**
+     * Checks if user is administrator
+     */
+    CHECK_ADMIN,
+
+    /**
+     * Checks if user exists
+     */
+    CHECK_EXIST
 }
