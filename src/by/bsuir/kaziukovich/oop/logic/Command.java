@@ -5,7 +5,7 @@ package by.bsuir.kaziukovich.oop.logic;
  */
 public interface Command {
     /**
-     * Interface for string commands
+     * Command execution method
      * @param request Command request data
      * @return Command response
      * @throws CommandException In case of any command execution error
