@@ -27,5 +27,10 @@ public enum BookCommandName {
     /**
      * Deletes book
      */
-    DELETE_BOOK
+    DELETE_BOOK,
+
+    /**
+     * Returns all book strings
+     */
+    GET_ALL
 }
