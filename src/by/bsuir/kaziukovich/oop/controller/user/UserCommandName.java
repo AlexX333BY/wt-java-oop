@@ -30,7 +30,7 @@ public enum UserCommandName {
     DELETE_USER,
 
     /**
-     * Checks password
+     * Returns password digest
      */
-    CHECK_PASSWORD
+    GET_PASSWORD_DIGEST
 }

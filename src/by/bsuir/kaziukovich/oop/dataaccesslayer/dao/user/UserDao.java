@@ -12,10 +12,10 @@ public interface UserDao extends Dao<UserInfo> {
     /**
      * Creates and adds new user struct with base role
      * @param username Username of new user
-     * @param password Password of new user
+     * @param passwordDigest Password digest of new user
      * @throws ExistanceException In case of existance of user with same name
      */
-    void addNewUser(String username, String password) throws ExistanceException;
+    void addNewUser(String username, String passwordDigest) throws ExistanceException;
 
     /**
      * Deletes user with specified username
@@ -27,19 +27,19 @@ public interface UserDao extends Dao<UserInfo> {
     /**
      * Updates user with specified parameters
      * @param username Username to update by
-     * @param password New user password
+     * @param passwordDigest New user password digest
      * @param userRole New user role
      * @throws ExistanceException In case of non existance of user with specified name
      */
-    void updateUser(String username, String password, UserRole userRole) throws ExistanceException;
+    void updateUser(String username, String passwordDigest, UserRole userRole) throws ExistanceException;
 
     /**
-     * Updates user with password
+     * Updates user with password digest
      * @param username Username to update by
-     * @param password New user password
+     * @param passwordDigest New user password digest
      * @throws ExistanceException In case of non existance of user with specified name
      */
-    void updateUser(String username, String password) throws ExistanceException;
+    void updateUser(String username, String passwordDigest) throws ExistanceException;
 
     /**
      * Updates user with new role

@@ -30,18 +30,18 @@ public class LibraryUserDao implements UserDao {
     /**
      * Creates and adds new user struct with base role
      * @param username Username of new user
-     * @param password Password of new user
+     * @param passwordDigest Password digest of new user
      * @throws ExistanceException In case of existance of user with same name
      */
     @Override
-    public void addNewUser(String username, String password) throws ExistanceException {
+    public void addNewUser(String username, String passwordDigest) throws ExistanceException {
         UserInfo newUser;
 
-        if ((username == null) || (password == null)) {
+        if ((username == null) || (passwordDigest == null)) {
             throw new IllegalArgumentException("Arguments shouldn't be null");
         }
 
-        newUser = UserInfoFactory.createNew(username, password, UserRole.USER);
+        newUser = UserInfoFactory.createNew(username, passwordDigest, UserRole.USER);
         for (UserInfo user : users) {
             if (user.compareTo(newUser) == 0) {
                 throw new ExistanceException("User with username" + username + "already exists");
@@ -68,36 +68,36 @@ public class LibraryUserDao implements UserDao {
     /**
      * Updates user with specified parameters
      * @param username Username to update by
-     * @param password New user password
+     * @param passwordDigest New user password digest
      * @param userRole New user role
      * @throws ExistanceException In case of non existance of user with specified name
      */
     @Override
-    public void updateUser(String username, String password, UserRole userRole) throws ExistanceException {
+    public void updateUser(String username, String passwordDigest, UserRole userRole) throws ExistanceException {
         UserInfo userToUpdate;
 
         if (username == null) {
             throw new IllegalArgumentException("Username shouldn't be null");
         }
-        if ((password == null) && (userRole == null)) {
+        if ((passwordDigest == null) && (userRole == null)) {
             throw new IllegalArgumentException("At least one user parameter shoudln't be null");
         }
 
         userToUpdate = get(username);
         deleteUser(username);
-        users.add(UserInfoFactory.createNew(username, password == null ? userToUpdate.getPasswordDigest() : password,
+        users.add(UserInfoFactory.createNew(username, passwordDigest == null ? userToUpdate.getPasswordDigest() : passwordDigest,
                 userRole == null ? userToUpdate.getUserRole() : userRole));
     }
 
     /**
-     * Updates user with password
+     * Updates user with password digest
      * @param username Username to update by
-     * @param password New user password
+     * @param passwordDigest New user password digest
      * @throws ExistanceException In case of non existance of user with specified name
      */
     @Override
-    public void updateUser(String username, String password) throws ExistanceException {
-        updateUser(username, password, null);
+    public void updateUser(String username, String passwordDigest) throws ExistanceException {
+        updateUser(username, passwordDigest, null);
     }
 
     /**
