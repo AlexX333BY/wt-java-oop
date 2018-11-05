@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.controller;
+package by.bsuir.kaziukovich.oop.logic;
 
 /**
  * Exception to be thrown in case of command execution error

@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.controller.book;
+package by.bsuir.kaziukovich.oop.logic.book;
 
 /**
  * Command names for books data

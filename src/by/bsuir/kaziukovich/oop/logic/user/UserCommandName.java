@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.controller.user;
+package by.bsuir.kaziukovich.oop.logic.user;
 
 /**
  * Command names for users data

@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.controller;
+package by.bsuir.kaziukovich.oop.logic;
 
 /**
  * Command interface
