@@ -41,7 +41,7 @@ public class LibraryUserDao implements UserDao {
             throw new IllegalArgumentException("Arguments shouldn't be null");
         }
 
-        newUser = UserInfoFactory.createNew(username, passwordDigest, UserRole.USER);
+        newUser = UserInfoFactory.createNew(username.toLowerCase(), passwordDigest, UserRole.USER);
         for (UserInfo user : users) {
             if (user.compareTo(newUser) == 0) {
                 throw new ExistanceException("User with username" + username + "already exists");
@@ -62,7 +62,7 @@ public class LibraryUserDao implements UserDao {
             throw new IllegalArgumentException("Username shouldn't be null");
         }
 
-        users.remove(get(username));
+        users.remove(get(username.toLowerCase()));
     }
 
     /**
@@ -75,6 +75,7 @@ public class LibraryUserDao implements UserDao {
     @Override
     public void updateUser(String username, String passwordDigest, UserRole userRole) throws ExistanceException {
         UserInfo userToUpdate;
+        String loweredUsername;
 
         if (username == null) {
             throw new IllegalArgumentException("Username shouldn't be null");
@@ -83,9 +84,10 @@ public class LibraryUserDao implements UserDao {
             throw new IllegalArgumentException("At least one user parameter shoudln't be null");
         }
 
-        userToUpdate = get(username);
-        deleteUser(username);
-        users.add(UserInfoFactory.createNew(username, passwordDigest == null ? userToUpdate.getPasswordDigest() : passwordDigest,
+        loweredUsername = username.toLowerCase();
+        userToUpdate = get(loweredUsername);
+        deleteUser(loweredUsername);
+        users.add(UserInfoFactory.createNew(loweredUsername, passwordDigest == null ? userToUpdate.getPasswordDigest() : passwordDigest,
                 userRole == null ? userToUpdate.getUserRole() : userRole));
     }
 
@@ -119,12 +121,15 @@ public class LibraryUserDao implements UserDao {
      */
     @Override
     public UserInfo get(String username) throws ExistanceException {
+        String loweredUsername;
+
         if (username == null) {
             throw new IllegalArgumentException("Username shouldn't be null");
         }
 
+        loweredUsername = username.toLowerCase();
         for (UserInfo userInfo : users) {
-            if (userInfo.getUsername().equals(username)) {
+            if (userInfo.getUsername().equals(loweredUsername)) {
                 return userInfo;
             }
         }
@@ -179,7 +184,7 @@ public class LibraryUserDao implements UserDao {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "@books: " + users.toString() + ", path: " + path;
+        return getClass().getName() + "@users: " + users.toString() + ", path: " + path;
     }
 
     /**
