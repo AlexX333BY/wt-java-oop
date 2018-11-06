@@ -2,6 +2,7 @@ package by.bsuir.kaziukovich.oop.datalayer.checker.userinfo.impl;
 
 import by.bsuir.kaziukovich.oop.datalayer.checker.userinfo.UserInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LibraryUserInfoChecker implements UserInfoChecker {
@@ -82,6 +83,46 @@ public class LibraryUserInfoChecker implements UserInfoChecker {
         splittedEntry = entry.split(delimiter);
         return (splittedEntry.length == ENTRY_PARTS) && isUsernameCorrect(splittedEntry[0])
                 && isPasswordDigestCorrect(splittedEntry[1]) && isUserRoleCorrect(splittedEntry[2]);
+    }
+
+    /**
+     * Checks whether current object equals specified object
+     * @param o Specified object
+     * @return True if objects are equal, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        LibraryUserInfoChecker libraryUserInfoChecker;
+
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+
+        libraryUserInfoChecker = (LibraryUserInfoChecker) o;
+        return Objects.equals(usernamePattern, libraryUserInfoChecker.usernamePattern)
+                && Objects.equals(passwordDigestPattern, libraryUserInfoChecker.passwordDigestPattern);
+    }
+
+    /**
+     * Generates hash code of this object
+     * @return Hash code of this object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(usernamePattern, passwordDigestPattern);
+    }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "@usernamePattern: " + usernamePattern.toString() +", passwordDigestPattern: "
+                + passwordDigestPattern.toString();
     }
 
     /**

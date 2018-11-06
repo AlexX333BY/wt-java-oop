@@ -27,4 +27,13 @@ public class UpdateDataCommand implements Command {
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
     }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
+    }
 }

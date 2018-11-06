@@ -2,6 +2,8 @@ package by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.impl;
 
 import by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.BookInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
+
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class LibraryBookInfoChecker implements BookInfoChecker {
@@ -131,6 +133,46 @@ public class LibraryBookInfoChecker implements BookInfoChecker {
         return (splittedEntry.length == ENTRY_PARTS) && isAuthorCorrect(splittedEntry[0])
                 && isTitleCorrect(splittedEntry[1]) && isIsbnCorrect(splittedEntry[2])
                 && isBookTypeCorrect(splittedEntry[3]);
+    }
+
+    /**
+     * Checks whether current object equals specified object
+     * @param o Specified object
+     * @return True if objects are equal, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        LibraryBookInfoChecker libraryBookInfoChecker;
+
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
+
+        libraryBookInfoChecker = (LibraryBookInfoChecker) o;
+        return Objects.equals(titlePattern, libraryBookInfoChecker.titlePattern)
+                && Objects.equals(authorPattern, libraryBookInfoChecker.authorPattern);
+    }
+
+    /**
+     * Generates hash code of this object
+     * @return Hash code of this object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(titlePattern, authorPattern);
+    }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "@titlePattern: " + titlePattern.toString() +", authorPattern: "
+                + authorPattern.toString();
     }
 
     /**

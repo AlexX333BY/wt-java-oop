@@ -37,4 +37,13 @@ public class CheckPasswordCommand implements Command {
             throw new CommandException("Error executing CheckPassword command", e);
         }
     }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
+    }
 }

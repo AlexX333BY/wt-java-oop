@@ -54,4 +54,13 @@ public class GetAllBooksCommand implements Command {
 
         return result;
     }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
+    }
 }

@@ -6,6 +6,8 @@ import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
+import java.util.Objects;
+
 /**
  * Command for deleting book
  */
@@ -34,5 +36,14 @@ public class DeleteBookCommand implements Command {
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
+    }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
     }
 }

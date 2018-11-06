@@ -29,4 +29,13 @@ public class Md5DigestGenerator implements PasswordDigestGenerator {
             throw new PasswordDigestException("Error acquiring MD5 digest instance", e);
         }
     }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
+    }
 }
