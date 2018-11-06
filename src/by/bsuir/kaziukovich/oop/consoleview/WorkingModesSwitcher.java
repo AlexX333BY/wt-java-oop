@@ -3,6 +3,7 @@ package by.bsuir.kaziukovich.oop.consoleview;
 import by.bsuir.kaziukovich.oop.consoleview.impl.ConsoleScanner;
 import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerFactory;
+import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandName;
 
@@ -81,8 +82,11 @@ public class WorkingModesSwitcher {
             System.out.print("Enter your password: ");
             enteredPassword = ConsoleScanner.getNonEmptyString();
             try {
-                loginController.process(enteredUsername, enteredPassword);
-                isLogined = true;
+                isLogined = loginController.process(enteredUsername, enteredPassword)[0]
+                        .equals(ControllerResponse.SUCCESS_RESPONSE);
+                if (!isLogined) {
+                    System.out.println("Wring password, try again: ");
+                }
             } catch (ProcessException e) {
                 isLogined = false;
                 System.out.println("Error while login, try again.");
