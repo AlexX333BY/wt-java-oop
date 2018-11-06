@@ -9,16 +9,13 @@ public class BookDaoFactory {
     /**
      * Single BookDao instance
      */
-    private static BookDao bookDao;
+    private static BookDao bookDao = new LibraryBookDao();
 
     /**
      * Generates and returns BookDao instance
      * @return BookDao instance
      */
     public static BookDao getBookDao() {
-        if (bookDao == null) {
-            bookDao = new LibraryBookDao();
-        }
         return bookDao;
     }
 
