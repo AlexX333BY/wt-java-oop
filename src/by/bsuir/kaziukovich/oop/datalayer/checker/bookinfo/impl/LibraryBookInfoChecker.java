@@ -2,7 +2,6 @@ package by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.impl;
 
 import by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.BookInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
-
 import java.util.Objects;
 import java.util.regex.Pattern;
 

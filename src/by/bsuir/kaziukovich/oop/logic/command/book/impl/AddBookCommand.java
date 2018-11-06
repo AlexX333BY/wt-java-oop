@@ -2,13 +2,10 @@ package by.bsuir.kaziukovich.oop.logic.command.book.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
-import by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.impl.LibraryBookInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
-
-import java.util.Objects;
 
 /**
  * Command for adding new book

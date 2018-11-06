@@ -2,7 +2,6 @@ package by.bsuir.kaziukovich.oop.logic.digest.impl;
 
 import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
 import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGenerator;
-
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
