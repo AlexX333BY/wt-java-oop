@@ -1,25 +1,24 @@
-package by.bsuir.kaziukovich.oop.logic.command.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
-import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
-import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
- * Command for adding new user with base rights
+ * Command for updating user role
  */
-public class AddUserCommand implements Command {
+public class UpdateUserRoleCommand implements Command {
     /**
-     * Arguments required for this command
+     * Command required arguments count
      */
     public static final byte REQUIRED_ARGUMENTS = 2;
 
     /**
      * Command execution method
-     * @param request Command request data. 2 arguments required: username and password
+     * @param request Command request data. 2 required arguments: username and user role
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -30,10 +29,9 @@ public class AddUserCommand implements Command {
         }
 
         try {
-            UserDaoFactory.getUserDao().addNewUser(request[0],
-                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
-        } catch (ExistanceException | PasswordDigestException e) {
-            throw new CommandException("Error executing AddUser command", e);
+            UserDaoFactory.getUserDao().updateUser(request[0], UserRole.valueOf(request[1].toUpperCase()));
+        } catch (ExistanceException e) {
+            throw new CommandException("Error executing UpdateUserRole command", e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };

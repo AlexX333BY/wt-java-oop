@@ -1,16 +1,17 @@
-package by.bsuir.kaziukovich.oop.logic.command.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
-import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
- * Command for updating user role
+ * Command for updating user password digest
  */
-public class UpdateUserRoleCommand implements Command {
+public class UpdateUserPasswordCommand implements Command {
     /**
      * Command required arguments count
      */
@@ -18,7 +19,7 @@ public class UpdateUserRoleCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data. 2 required arguments: username and user role
+     * @param request Command request data. 2 required arguments: username and password digest
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -29,9 +30,10 @@ public class UpdateUserRoleCommand implements Command {
         }
 
         try {
-            UserDaoFactory.getUserDao().updateUser(request[0], UserRole.valueOf(request[1].toUpperCase()));
-        } catch (ExistanceException e) {
-            throw new CommandException("Error executing UpdateUserRole command", e);
+            UserDaoFactory.getUserDao().updateUser(request[0],
+                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
+        } catch (ExistanceException | PasswordDigestException e) {
+            throw new CommandException("Error executing UpdateUser command", e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };

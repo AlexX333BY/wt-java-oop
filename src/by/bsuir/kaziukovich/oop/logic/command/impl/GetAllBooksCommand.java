@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.logic.command.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;

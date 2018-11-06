@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.logic.command.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.NeverLoadedException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.StorageException;
@@ -10,7 +10,7 @@ import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 /**
  * Command for updating data in file
  */
-public class UpdateDataCommand implements Command {
+public class UpdateBooksCommand implements Command {
     /**
      * Command execution method
      * @param request Command request data. Not used

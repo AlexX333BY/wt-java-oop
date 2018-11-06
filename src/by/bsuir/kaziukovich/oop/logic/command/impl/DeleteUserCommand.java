@@ -1,38 +1,36 @@
-package by.bsuir.kaziukovich.oop.logic.command.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
-import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
+import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
- * Command for updating book
+ * Command for deleting user
  */
-public class UpdateBookCommand implements Command {
+public class DeleteUserCommand implements Command {
     /**
-     * Required arguments count for command
+     * Required arguments count for this command
      */
-    public static final byte REQUIRED_ARGUMENTS = 4;
+    public static final byte REQUIRED_COMMANDS = 1;
 
     /**
      * Command execution method
-     * @param request Command request data. 4 strings required: title, author, ISBN, book type
+     * @param request Command request data. 1 argument required: username
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
     @Override
     public String[] execute(String[] request) throws CommandException {
-        if ((request == null) || (request.length != REQUIRED_ARGUMENTS)) {
-            throw new IllegalArgumentException(REQUIRED_ARGUMENTS + "arguments required");
+        if ((request == null) || (request.length != REQUIRED_COMMANDS)) {
+            throw new IllegalArgumentException(REQUIRED_COMMANDS + " arguments required");
         }
 
         try {
-            BookDaoFactory.getBookDao().updateBook(request[0], request[1], request[2],
-                    BookType.valueOf(request[3].toUpperCase()));
+            UserDaoFactory.getUserDao().deleteUser(request[0]);
         } catch (ExistanceException e) {
-            throw new CommandException("Error executing UpdateBook command", e);
+            throw new CommandException("Error executing DeleteUser command", e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };

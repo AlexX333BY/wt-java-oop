@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.logic.command.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
@@ -9,11 +9,11 @@ import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
 import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
- * Command to check user password propriety
+ * Command for adding new user with base rights
  */
-public class CheckPasswordCommand implements Command {
+public class AddUserCommand implements Command {
     /**
-     * Required arguments count for this command
+     * Arguments required for this command
      */
     public static final byte REQUIRED_ARGUMENTS = 2;
 
@@ -30,12 +30,13 @@ public class CheckPasswordCommand implements Command {
         }
 
         try {
-            return new String[] { UserDaoFactory.getUserDao().get(request[0]).getPasswordDigest()
-                    .equals(PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]))
-                    ? CommandResponse.SUCCESS_RESPONSE : CommandResponse.FAILURE_RESPONSE };
+            UserDaoFactory.getUserDao().addNewUser(request[0],
+                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
         } catch (ExistanceException | PasswordDigestException e) {
-            throw new CommandException("Error executing CheckPassword command", e);
+            throw new CommandException("Error executing AddUser command", e);
         }
+
+        return new String[] { CommandResponse.SUCCESS_RESPONSE };
     }
 
     /**

@@ -1,25 +1,23 @@
-package by.bsuir.kaziukovich.oop.logic.command.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
-import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
-import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
- * Command for updating user password digest
+ * Command for checking user existance
  */
-public class UpdateUserPasswordCommand implements Command {
+public class CheckUserExistCommand implements Command {
     /**
      * Command required arguments count
      */
-    public static final byte REQUIRED_ARGUMENTS = 2;
+    public static final byte REQUIRED_ARGUMENTS = 1;
 
     /**
      * Command execution method
-     * @param request Command request data. 2 required arguments: username and password digest
+     * @param request Command request data. 1 argument required: username
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -30,13 +28,11 @@ public class UpdateUserPasswordCommand implements Command {
         }
 
         try {
-            UserDaoFactory.getUserDao().updateUser(request[0],
-                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
-        } catch (ExistanceException | PasswordDigestException e) {
-            throw new CommandException("Error executing UpdateUser command", e);
+            UserDaoFactory.getUserDao().get(request[0]);
+            return new String[] { CommandResponse.SUCCESS_RESPONSE };
+        } catch (ExistanceException e) {
+            return new String[] { CommandResponse.FAILURE_RESPONSE };
         }
-
-        return new String[] { CommandResponse.SUCCESS_RESPONSE };
     }
 
     /**

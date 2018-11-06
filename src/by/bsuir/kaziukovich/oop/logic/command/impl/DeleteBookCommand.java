@@ -1,39 +1,39 @@
-package by.bsuir.kaziukovich.oop.logic.command.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
-import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
+import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
- * Command for checking user administrator rights
+ * Command for deleting book
  */
-public class CheckAdminCommand implements Command {
+public class DeleteBookCommand implements Command {
     /**
-     * Command required arguments count
+     * Required arguments count for command
      */
     public static final byte REQUIRED_ARGUMENTS = 1;
 
     /**
      * Command execution method
-     * @param request Command request data. 1 argument required: username
+     * @param request Command request data. 1 argument required: ISBN
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
     @Override
     public String[] execute(String[] request) throws CommandException {
         if ((request == null) || (request.length != REQUIRED_ARGUMENTS)) {
-            throw new IllegalArgumentException(REQUIRED_ARGUMENTS + " arguments required");
+            throw new IllegalArgumentException(REQUIRED_ARGUMENTS + "arguments required");
         }
 
         try {
-            return new String[] { UserDaoFactory.getUserDao().get(request[0]).getUserRole().equals(UserRole.ADMIN)
-                    ? CommandResponse.SUCCESS_RESPONSE : CommandResponse.FAILURE_RESPONSE };
+            BookDaoFactory.getBookDao().deleteBook(request[0]);
         } catch (ExistanceException e) {
-            throw new CommandException("Error executing CheckAdmin command", e);
+            throw new CommandException("Error executing DeleteBook command", e);
         }
+
+        return new String[] { CommandResponse.SUCCESS_RESPONSE };
     }
 
     /**

@@ -1,36 +1,38 @@
-package by.bsuir.kaziukovich.oop.logic.command.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.impl;
 
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.StorageException;
+import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
+import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
- * Command for loading data from file
+ * Command for updating book
  */
-public class LoadDataCommand implements Command {
+public class UpdateBookCommand implements Command {
     /**
-     * Required arguments count for this command
+     * Required arguments count for command
      */
-    public static final byte REQUIRED_ARGUMENTS = 1;
+    public static final byte REQUIRED_ARGUMENTS = 4;
 
     /**
      * Command execution method
-     * @param request Command request data - 1 strings: file path
+     * @param request Command request data. 4 strings required: title, author, ISBN, book type
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
     @Override
     public String[] execute(String[] request) throws CommandException {
         if ((request == null) || (request.length != REQUIRED_ARGUMENTS)) {
-            throw new IllegalArgumentException("Request should contain " + REQUIRED_ARGUMENTS + " element");
+            throw new IllegalArgumentException(REQUIRED_ARGUMENTS + "arguments required");
         }
 
         try {
-            BookDaoFactory.getBookDao().loadFrom(request[0]);
-        } catch (StorageException e) {
-            throw new CommandException("Error executing Load command", e);
+            BookDaoFactory.getBookDao().updateBook(request[0], request[1], request[2],
+                    BookType.valueOf(request[3].toUpperCase()));
+        } catch (ExistanceException e) {
+            throw new CommandException("Error executing UpdateBook command", e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
