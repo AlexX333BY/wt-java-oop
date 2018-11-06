@@ -129,7 +129,7 @@ public class LibraryUserInfoChecker implements UserInfoChecker {
      * Constructor with field initializers
      */
     public LibraryUserInfoChecker() {
-        usernamePattern = Pattern.compile("^[\\w@!#$%&'*+\\-/=?^`{|}~.]+$");
+        usernamePattern = Pattern.compile("^[\\w@!#$%&'*+\\-/=?^`{|}~.]+$]");
         passwordDigestPattern = Pattern.compile("^[a-fA-F0-9]+$");
     }
 }
