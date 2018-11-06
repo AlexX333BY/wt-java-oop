@@ -1,7 +1,7 @@
-package by.bsuir.kaziukovich.oop.logic.book;
+package by.bsuir.kaziukovich.oop.logic.command.book;
 
-import by.bsuir.kaziukovich.oop.logic.Command;
-import by.bsuir.kaziukovich.oop.logic.book.impl.*;
+import by.bsuir.kaziukovich.oop.logic.command.Command;
+import by.bsuir.kaziukovich.oop.logic.command.book.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 

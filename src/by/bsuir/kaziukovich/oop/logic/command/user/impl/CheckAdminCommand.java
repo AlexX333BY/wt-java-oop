@@ -1,11 +1,11 @@
-package by.bsuir.kaziukovich.oop.logic.user.impl;
+package by.bsuir.kaziukovich.oop.logic.command.user.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
-import by.bsuir.kaziukovich.oop.logic.Command;
-import by.bsuir.kaziukovich.oop.logic.CommandException;
-import by.bsuir.kaziukovich.oop.logic.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.command.Command;
+import by.bsuir.kaziukovich.oop.logic.command.CommandException;
+import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
  * Command for checking user administrator rights

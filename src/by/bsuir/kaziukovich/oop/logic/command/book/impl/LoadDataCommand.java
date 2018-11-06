@@ -1,10 +1,10 @@
-package by.bsuir.kaziukovich.oop.logic.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.book.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.StorageException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
-import by.bsuir.kaziukovich.oop.logic.Command;
-import by.bsuir.kaziukovich.oop.logic.CommandException;
-import by.bsuir.kaziukovich.oop.logic.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.command.Command;
+import by.bsuir.kaziukovich.oop.logic.command.CommandException;
+import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
  * Command for loading data from file

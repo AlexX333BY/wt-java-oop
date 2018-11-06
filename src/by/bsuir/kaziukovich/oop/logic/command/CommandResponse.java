@@ -1,4 +1,4 @@
-package by.bsuir.kaziukovich.oop.logic;
+package by.bsuir.kaziukovich.oop.logic.command;
 
 /**
  * Static constructor containing constants for commands response

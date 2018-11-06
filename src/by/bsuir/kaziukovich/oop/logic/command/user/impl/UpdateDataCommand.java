@@ -1,30 +1,30 @@
-package by.bsuir.kaziukovich.oop.logic.book.impl;
+package by.bsuir.kaziukovich.oop.logic.command.user.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.NeverLoadedException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.StorageException;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
-import by.bsuir.kaziukovich.oop.logic.Command;
-import by.bsuir.kaziukovich.oop.logic.CommandException;
-import by.bsuir.kaziukovich.oop.logic.CommandResponse;
+import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
+import by.bsuir.kaziukovich.oop.logic.command.Command;
+import by.bsuir.kaziukovich.oop.logic.command.CommandException;
+import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 
 /**
- * Command for updating data in file
+ * Command for updating data in source
  */
 public class UpdateDataCommand implements Command {
     /**
      * Command execution method
-     * @param request Command request data. Not used
+     * @param request Command request data. Ignored
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
     @Override
     public String[] execute(String[] request) throws CommandException {
         try {
-            BookDaoFactory.getBookDao().updateData();
+            UserDaoFactory.getUserDao().updateData();
         } catch (StorageException | NeverLoadedException e) {
             throw new CommandException("Error executing Update command", e);
         }
 
-        return new String[] {CommandResponse.SUCCESS_RESPONSE };
+        return new String[] { CommandResponse.SUCCESS_RESPONSE };
     }
 }
