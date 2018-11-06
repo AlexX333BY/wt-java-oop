@@ -1,53 +1,27 @@
 package by.bsuir.kaziukovich.oop.datalayer.readerwriter.bookinfo.impl;
 
+import by.bsuir.kaziukovich.oop.datalayer.checker.InfoCheckersFactory;
+import by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.BookInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
+import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
-import by.bsuir.kaziukovich.oop.datalayer.info.book.impl.LibraryBookInfo;
 import by.bsuir.kaziukovich.oop.datalayer.readerwriter.InfoReadWriteException;
 import by.bsuir.kaziukovich.oop.datalayer.readerwriter.bookinfo.BookInfoReaderWriter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class implementing InfoReaderWriter interface for BookInfo type, reading info from file
  */
 public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
     /**
-     * Pattern to check input string
-     */
-    private final Pattern bookInfoPattern;
-
-    /**
-     * Group name of book author for regex
-     */
-    private final String authorGroupName;
-
-    /**
-     * Group name of book title for regex
-     */
-    private final String titleGroupName;
-
-    /**
-     * Group name of book type for regex
-     */
-    private final String bookTypeGroupName;
-
-    /**
-     * Group name of book ISBN for regex
-     */
-    private final String isbnGroupName;
-
-    /**
      * Delimiter of line entries
      */
-    private final char delimiter;
+    private final String delimiter;
 
     /**
      * Reads lines from specified path
@@ -58,8 +32,9 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
     @Override
     public List<BookInfo> readFrom(String path) throws InfoReadWriteException {
         List<BookInfo> result = new ArrayList<>();
+        BookInfoChecker bookInfoChecker = InfoCheckersFactory.getBookInfoChecker();
         List<String> lines;
-        Matcher bookPatternMatcher;
+        String[] splittedLine;
 
         if (path == null) {
             throw new IllegalArgumentException("Path shouldn't be null");
@@ -72,13 +47,10 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
         }
 
         for (String line : lines) {
-            bookPatternMatcher = bookInfoPattern.matcher(line);
-            if (bookPatternMatcher.matches()) {
-                try {
-                    result.add(new LibraryBookInfo(bookPatternMatcher.group(titleGroupName),
-                            bookPatternMatcher.group(authorGroupName), bookPatternMatcher.group(isbnGroupName),
-                            BookType.valueOf(bookPatternMatcher.group(bookTypeGroupName))));
-                } catch (IllegalArgumentException ignored) { }
+            if (bookInfoChecker.isEntryCorrect(line, delimiter)) {
+                splittedLine = line.split(delimiter);
+                result.add(BookInfoFactory.createNew(splittedLine[1], splittedLine[0], splittedLine[2],
+                        BookType.valueOf(splittedLine[3])));
             }
         }
         return result;
@@ -127,12 +99,7 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
         }
 
         libraryBookInfoFileReaderWriter = (LibraryBookInfoFileReaderWriter) o;
-        return delimiter == libraryBookInfoFileReaderWriter.delimiter &&
-                Objects.equals(bookInfoPattern, libraryBookInfoFileReaderWriter.bookInfoPattern) &&
-                Objects.equals(authorGroupName, libraryBookInfoFileReaderWriter.authorGroupName) &&
-                Objects.equals(titleGroupName, libraryBookInfoFileReaderWriter.titleGroupName) &&
-                Objects.equals(bookTypeGroupName, libraryBookInfoFileReaderWriter.bookTypeGroupName) &&
-                Objects.equals(isbnGroupName, libraryBookInfoFileReaderWriter.isbnGroupName);
+        return Objects.equals(delimiter, libraryBookInfoFileReaderWriter.delimiter);
     }
 
     /**
@@ -141,8 +108,7 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(bookInfoPattern, authorGroupName, titleGroupName, bookTypeGroupName, isbnGroupName,
-                delimiter);
+        return Objects.hash(delimiter);
     }
 
     /**
@@ -151,22 +117,13 @@ public class LibraryBookInfoFileReaderWriter implements BookInfoReaderWriter {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "@bookInfoPattern: " + bookInfoPattern.toString() + ", authorGroupName: "
-                + authorGroupName + ", titleGroupName: " + titleGroupName + ", bookTypeGroupName: "
-                + bookTypeGroupName + ", isbnGroupName: " + isbnGroupName + ", delimiter: " + delimiter;
+        return getClass().getName() + "@delimiter: " + delimiter;
     }
 
     /**
      * Constructor for ReaderWriter instance
      */
     public LibraryBookInfoFileReaderWriter() {
-        authorGroupName = "author";
-        titleGroupName = "title";
-        bookTypeGroupName = "type";
-        isbnGroupName = "isbn";
-        delimiter = ':';
-        bookInfoPattern = Pattern.compile("^(?<" + authorGroupName + ">[a-zA-Z]+[a-zA-Z\\s]*)"
-                + delimiter + "(?<" + titleGroupName + ">[a-zA-Z]+[a-zA-Z\\s]*)"  + delimiter + "(?<" + isbnGroupName
-                + ">[\\d\\-X]{10,})" + delimiter + "(?<" + bookTypeGroupName + ">\\w+)$");
+        delimiter = ":";
     }
 }

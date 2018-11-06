@@ -1,5 +1,7 @@
 package by.bsuir.kaziukovich.oop.datalayer.info.user.impl;
 
+import by.bsuir.kaziukovich.oop.datalayer.checker.InfoCheckersFactory;
+import by.bsuir.kaziukovich.oop.datalayer.checker.userinfo.UserInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
 import java.util.Objects;
@@ -109,13 +111,23 @@ public class LibraryUserInfo implements UserInfo {
      */
     public LibraryUserInfo(String username, String passwordDigest, UserRole userRole)
     {
-        if ((username == null) || (passwordDigest == null))
+        UserInfoChecker userInfoChecker = InfoCheckersFactory.getUserInfoChecker();
+        String finalUsername, finalPasswordDigest;
+
+        if ((username == null) || (passwordDigest == null) || (userRole == null))
         {
             throw new IllegalArgumentException("Constructor parameters shouldn't be null");
         }
 
-        this.username = username.toLowerCase();
-        this.passwordDigest = passwordDigest;
+        finalUsername = username.trim().toLowerCase();
+        finalPasswordDigest = passwordDigest.trim().toUpperCase();
+        if (!userInfoChecker.isUsernameCorrect(finalUsername)
+                || !userInfoChecker.isPasswordDigestCorrect(finalPasswordDigest)) {
+            throw new IllegalArgumentException("Cannot create user with such parameters");
+        }
+
+        this.username = finalUsername;
+        this.passwordDigest = finalPasswordDigest;
         this.userRole = userRole;
     }
 }

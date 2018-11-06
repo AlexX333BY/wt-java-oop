@@ -1,48 +1,27 @@
 package by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.impl;
 
+import by.bsuir.kaziukovich.oop.datalayer.checker.InfoCheckersFactory;
+import by.bsuir.kaziukovich.oop.datalayer.checker.userinfo.UserInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.user.UserRole;
-import by.bsuir.kaziukovich.oop.datalayer.info.user.impl.LibraryUserInfo;
 import by.bsuir.kaziukovich.oop.datalayer.readerwriter.InfoReadWriteException;
 import by.bsuir.kaziukovich.oop.datalayer.readerwriter.userinfo.UserInfoReaderWriter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class implementing InfoReaderWriter interface for UserInfo type, reading info from file
  */
 public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
     /**
-     * Pattern to check input string
-     */
-    private final Pattern userInfoPattern;
-
-    /**
-     * Group name of username for regex
-     */
-    private final String usernameGroupName;
-
-    /**
-     * Group name of user password digest for regex
-     */
-    private final String passwordDigestGroupName;
-
-    /**
-     * Group name of user role for regex
-     */
-    private final String userRoleGroupName;
-
-    /**
      * Delimiter of line entries
      */
-    private final char delimiter;
+    private final String delimiter;
 
     /**
      * Reads lines from specified path
@@ -52,9 +31,10 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
      */
     @Override
     public List<UserInfo> readFrom(String path) throws InfoReadWriteException {
+        UserInfoChecker userInfoChecker = InfoCheckersFactory.getUserInfoChecker();
         List<UserInfo> result = new ArrayList<>();
         List<String> lines;
-        Matcher userPatternMatcher;
+        String[] splittedLine;
 
         if (path == null) {
             throw new IllegalArgumentException("Path shouldn't be null");
@@ -67,13 +47,10 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
         }
 
         for (String line : lines) {
-            userPatternMatcher = userInfoPattern.matcher(line);
-            if (userPatternMatcher.matches()) {
-                try {
-                    result.add(new LibraryUserInfo(userPatternMatcher.group(usernameGroupName),
-                            userPatternMatcher.group(passwordDigestGroupName),
-                            UserRole.valueOf(userPatternMatcher.group(userRoleGroupName))));
-                } catch (IllegalArgumentException ignored) { }
+            if (userInfoChecker.isEntryCorrect(line, delimiter)) {
+                splittedLine = line.split(delimiter);
+                result.add(UserInfoFactory.createNew(splittedLine[0], splittedLine[1],
+                        UserRole.valueOf(splittedLine[2])));
             }
         }
         return result;
@@ -122,11 +99,7 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
         }
 
         libraryUserInfoFileReaderWriter = (LibraryUserInfoFileReaderWriter) o;
-        return delimiter == libraryUserInfoFileReaderWriter.delimiter &&
-                Objects.equals(userInfoPattern, libraryUserInfoFileReaderWriter.userInfoPattern) &&
-                Objects.equals(usernameGroupName, libraryUserInfoFileReaderWriter.usernameGroupName) &&
-                Objects.equals(passwordDigestGroupName, libraryUserInfoFileReaderWriter.passwordDigestGroupName) &&
-                Objects.equals(userRoleGroupName, libraryUserInfoFileReaderWriter.userRoleGroupName);
+        return Objects.equals(delimiter, libraryUserInfoFileReaderWriter.delimiter);
     }
 
     /**
@@ -135,7 +108,7 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(userInfoPattern, usernameGroupName, passwordDigestGroupName, userRoleGroupName, delimiter);
+        return Objects.hash(delimiter);
     }
 
     /**
@@ -144,20 +117,13 @@ public class LibraryUserInfoFileReaderWriter implements UserInfoReaderWriter {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "@userInfoPattern: " + userInfoPattern.toString() + ", usernameGroupName: "
-                + usernameGroupName + ", passwordDigestGroupName: " + passwordDigestGroupName + ", userRoleGroupName: "
-                + userRoleGroupName + ", delimiter: " + delimiter;
+        return getClass().getName() + "@delimiter: " + delimiter;
     }
 
     /**
      * Constructor for ReaderWriter instance
      */
     public LibraryUserInfoFileReaderWriter() {
-        usernameGroupName = "username";
-        passwordDigestGroupName = "digest";
-        userRoleGroupName = "role";
-        delimiter = ':';
-        userInfoPattern = Pattern.compile("^(?<" + usernameGroupName + ">\\w+)" + delimiter + "(?<"
-                + passwordDigestGroupName + ">\\w+)" + delimiter + "(?<" + userRoleGroupName + ">\\w+)$");
+        delimiter = ":";
     }
 }

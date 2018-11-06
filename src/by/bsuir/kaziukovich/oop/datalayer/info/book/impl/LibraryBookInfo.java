@@ -1,10 +1,10 @@
 package by.bsuir.kaziukovich.oop.datalayer.info.book.impl;
 
+import by.bsuir.kaziukovich.oop.datalayer.checker.InfoCheckersFactory;
+import by.bsuir.kaziukovich.oop.datalayer.checker.bookinfo.BookInfoChecker;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
-import by.bsuir.kaziukovich.oop.datalayer.info.book.IllegalIsbnException;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 /**
  * Implementation of BookInfo interface
@@ -117,37 +117,6 @@ public class LibraryBookInfo implements BookInfo {
     }
 
     /**
-     * Checks whether given ISBN is of modern or legacy type
-     * @param isbn Given ISBN
-     * @return True if ISBN if of one of types, otherwise false
-     */
-    private static boolean isIsbnCorrect(String isbn) {
-        String[] splittedIsbn = isbn.split(Pattern.quote("-"));
-        byte indent = 0;
-        int isbnLength = 0;
-
-        if ((splittedIsbn.length != MODERN_ISBN_PARTS) && (splittedIsbn.length != LEGACY_ISBN_PARTS)) {
-            return false;
-        }
-        if (splittedIsbn.length == MODERN_ISBN_PARTS) {
-            if (!splittedIsbn[0].matches("^97[89]$")) {
-                return false;
-            }
-            indent = 1;
-        }
-
-        for (String s : splittedIsbn) {
-            isbnLength += s.length();
-        }
-
-        return (isbnLength == 13)
-                && splittedIsbn[indent].matches("^\\d{1,5}$")
-                && splittedIsbn[1 + indent].matches("^\\d{2,7}$")
-                && splittedIsbn[2 + indent].matches("^\\d{1,6}$")
-                && splittedIsbn[3 + indent].matches("^[0-9X]$");
-    }
-
-    /**
      * Splits ISBN string to int array
      * @param isbn ISBN string
      * @return Splitted ISBN
@@ -200,18 +169,25 @@ public class LibraryBookInfo implements BookInfo {
      */
     public LibraryBookInfo(String title, String author, String isbn, BookType bookType)
     {
+        BookInfoChecker bookInfoChecker = InfoCheckersFactory.getBookInfoChecker();
+        String finalTitle, finalAuthor, finalIsbn;
+
         if ((title == null) || (isbn == null) || (author == null))
         {
             throw new IllegalArgumentException("Constructor parameters shouldn't be null");
         }
-        if (!isIsbnCorrect(isbn))
-        {
-            throw new IllegalIsbnException(isbn +  " isn't modern nor legacy ISBN");
+
+        finalAuthor = author.trim();
+        finalTitle = title.trim();
+        finalIsbn = isbn.trim().toUpperCase();
+        if (!bookInfoChecker.isAuthorCorrect(finalAuthor) || !bookInfoChecker.isIsbnCorrect(finalIsbn)
+                || !bookInfoChecker.isTitleCorrect(finalTitle)) {
+            throw new IllegalArgumentException("Cannot create book with such parameters");
         }
 
-        this.title = title;
-        this.author = author;
+        this.title = finalTitle;
+        this.author = finalAuthor;
         this.bookType = bookType;
-        this.isbn = isbn;
+        this.isbn = finalIsbn;
     }
 }
