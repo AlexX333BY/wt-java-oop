@@ -48,7 +48,7 @@ public class LoginController implements Controller {
         }
 
         try {
-            result = executionCommand.execute(new String[]{request});
+            result = executionCommand.execute(new String[]{username, request});
         } catch (CommandException e) {
             throw new ProcessException("Error while executing command", e);
         }

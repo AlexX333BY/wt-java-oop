@@ -22,6 +22,7 @@ public class RequestSplitter {
         ArrayList<String> parts = new ArrayList<>();
         Matcher requestMatcher;
         int groupNumber;
+        String group;
 
         if (request == null) {
             throw new IllegalArgumentException("Request shouldn't be null");
@@ -30,7 +31,10 @@ public class RequestSplitter {
         requestMatcher = requestPartPattern.matcher(request);
         while (requestMatcher.find()) {
             for (groupNumber = 1; groupNumber <= requestMatcher.groupCount(); ++groupNumber) {
-                parts.add(requestMatcher.group(groupNumber));
+                group = requestMatcher.group(groupNumber);
+                if (group != null) {
+                    parts.add(group);
+                }
             }
         }
 

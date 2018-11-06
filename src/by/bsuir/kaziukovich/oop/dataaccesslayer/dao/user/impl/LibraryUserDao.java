@@ -87,8 +87,8 @@ public class LibraryUserDao implements UserDao {
         loweredUsername = username.toLowerCase();
         userToUpdate = get(loweredUsername);
         deleteUser(loweredUsername);
-        users.add(UserInfoFactory.createNew(loweredUsername, passwordDigest == null ? userToUpdate.getPasswordDigest() : passwordDigest,
-                userRole == null ? userToUpdate.getUserRole() : userRole));
+        users.add(UserInfoFactory.createNew(loweredUsername, passwordDigest == null ? userToUpdate.getPasswordDigest()
+                : passwordDigest, userRole == null ? userToUpdate.getUserRole() : userRole));
     }
 
     /**
