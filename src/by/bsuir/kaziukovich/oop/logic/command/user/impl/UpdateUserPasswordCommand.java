@@ -5,6 +5,8 @@ import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
  * Command for updating user password digest
@@ -28,8 +30,9 @@ public class UpdateUserPasswordCommand implements Command {
         }
 
         try {
-            UserDaoFactory.getUserDao().updateUser(request[0], request[1]);
-        } catch (ExistanceException e) {
+            UserDaoFactory.getUserDao().updateUser(request[0],
+                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
+        } catch (ExistanceException | PasswordDigestException e) {
             throw new CommandException("Error executing UpdateUser command", e);
         }
 

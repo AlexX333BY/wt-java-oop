@@ -15,7 +15,7 @@ public class PasswordDigestGeneratorFactory {
      * Generates password generator instance
      * @return Password generator instance
      */
-    public PasswordDigestGenerator getPasswordDigestGenerator() {
+    public static PasswordDigestGenerator getPasswordDigestGenerator() {
         return passwordDigestGenerator;
     }
 

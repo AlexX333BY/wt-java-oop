@@ -5,6 +5,8 @@ import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
  * Command for adding new user with base rights
@@ -17,7 +19,7 @@ public class AddUserCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data. 2 arguments required: username and password digest
+     * @param request Command request data. 2 arguments required: username and password
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -28,8 +30,9 @@ public class AddUserCommand implements Command {
         }
 
         try {
-            UserDaoFactory.getUserDao().addNewUser(request[0], request[1]);
-        } catch (ExistanceException e) {
+            UserDaoFactory.getUserDao().addNewUser(request[0],
+                    PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
+        } catch (ExistanceException | PasswordDigestException e) {
             throw new CommandException("Error executing AddUser command", e);
         }
 

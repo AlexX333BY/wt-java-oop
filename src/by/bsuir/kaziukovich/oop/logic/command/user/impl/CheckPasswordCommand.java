@@ -5,9 +5,11 @@ import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestException;
+import by.bsuir.kaziukovich.oop.logic.digest.PasswordDigestGeneratorFactory;
 
 /**
- * Command to check user password digest propriety
+ * Command to check user password propriety
  */
 public class CheckPasswordCommand implements Command {
     /**
@@ -17,7 +19,7 @@ public class CheckPasswordCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data. 2 arguments required: username and password digest
+     * @param request Command request data. 2 arguments required: username and password
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -28,9 +30,10 @@ public class CheckPasswordCommand implements Command {
         }
 
         try {
-            return new String[] { UserDaoFactory.getUserDao().get(request[0]).getPasswordDigest().equals(request[1])
+            return new String[] { UserDaoFactory.getUserDao().get(request[0]).getPasswordDigest()
+                    .equals(PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]))
                     ? CommandResponse.SUCCESS_RESPONSE : CommandResponse.FAILURE_RESPONSE };
-        } catch (ExistanceException e) {
+        } catch (ExistanceException | PasswordDigestException e) {
             throw new CommandException("Error executing CheckPassword command", e);
         }
     }
