@@ -2,12 +2,11 @@ package by.bsuir.kaziukovich.oop.controller.login.impl;
 
 import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
-import by.bsuir.kaziukovich.oop.controller.IllegalRoleException;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
+import by.bsuir.kaziukovich.oop.logic.command.CommandName;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
-import by.bsuir.kaziukovich.oop.logic.command.user.UserCommandFactory;
-import by.bsuir.kaziukovich.oop.logic.command.user.UserCommandName;
+import by.bsuir.kaziukovich.oop.logic.command.factories.AccountCommandFactory;
 
 public class LoginController implements Controller {
     /**
@@ -16,10 +15,9 @@ public class LoginController implements Controller {
      * @param request  Request to process - password
      * @return Response
      * @throws ProcessException     In case of any processing error
-     * @throws IllegalRoleException In case of trying to process request with another access level
      */
     @Override
-    public String[] process(String username, String request) throws ProcessException, IllegalRoleException {
+    public String[] process(String username, String request) throws ProcessException {
         String trimmedUsername, trimmedPassword;
 
         if ((username == null) || (request == null)) {
@@ -33,16 +31,16 @@ public class LoginController implements Controller {
         }
 
         try {
-            if (UserCommandFactory.getCommand(UserCommandName.CHECK_EXIST.toString())
+            if (AccountCommandFactory.getCommand(CommandName.CHECK_USER_EXIST.toString())
                     .execute(new String[]{trimmedUsername})[0].equals(CommandResponse.SUCCESS_RESPONSE)) {
-                String[] result = UserCommandFactory.getCommand(UserCommandName.CHECK_PASSWORD.toString())
+                String[] result = AccountCommandFactory.getCommand(CommandName.CHECK_PASSWORD.toString())
                         .execute(new String[]{trimmedUsername, trimmedPassword});
 
                 result[0] = (result[0].equals(CommandResponse.SUCCESS_RESPONSE) ? ControllerResponse.SUCCESS_RESPONSE
                         : ControllerResponse.FAILURE_RESPONSE);
                 return result;
             } else {
-                String[] result = UserCommandFactory.getCommand(UserCommandName.ADD_USER.toString())
+                String[] result = AccountCommandFactory.getCommand(CommandName.ADD_USER.toString())
                         .execute(new String[]{trimmedUsername, trimmedPassword});
 
                 result[0] = (result[0].equals(CommandResponse.SUCCESS_RESPONSE) ? ControllerResponse.SUCCESS_RESPONSE
@@ -52,5 +50,14 @@ public class LoginController implements Controller {
         } catch (CommandException e) {
             throw new ProcessException("Error while login", e);
         }
+    }
+
+    /**
+     * Generates string representation of this object
+     * @return String representation of this object
+     */
+    @Override
+    public String toString() {
+        return getClass().getName();
     }
 }

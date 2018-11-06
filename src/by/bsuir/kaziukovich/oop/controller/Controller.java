@@ -10,7 +10,6 @@ public interface Controller {
      * @param request Request to process
      * @return Response
      * @throws ProcessException In case of any processing error
-     * @throws IllegalRoleException In case of trying to process request with another access level
      */
-    String[] process(String username, String request) throws ProcessException, IllegalRoleException;
+    String[] process(String username, String request) throws ProcessException;
 }
