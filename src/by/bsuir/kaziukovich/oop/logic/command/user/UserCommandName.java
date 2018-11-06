@@ -35,9 +35,9 @@ public enum UserCommandName {
     DELETE_USER,
 
     /**
-     * Checks user password digest
+     * Checks user password
      */
-    CHECK_PASSWORD_DIGEST,
+    CHECK_PASSWORD,
 
     /**
      * Checks if user is administrator

@@ -22,7 +22,7 @@ public class UserCommandFactory {
         Map<UserCommandName, Command> result = new HashMap<>();
 
         result.put(UserCommandName.ADD_USER, new AddUserCommand());
-        result.put(UserCommandName.CHECK_PASSWORD_DIGEST, new CheckPasswordCommand());
+        result.put(UserCommandName.CHECK_PASSWORD, new CheckPasswordCommand());
         result.put(UserCommandName.DELETE_USER, new DeleteUserCommand());
         result.put(UserCommandName.LOAD_DATA, new LoadDataCommand());
         result.put(UserCommandName.UPDATE_DATA, new UpdateDataCommand());
