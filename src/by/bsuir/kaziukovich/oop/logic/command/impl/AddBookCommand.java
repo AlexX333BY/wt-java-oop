@@ -1,5 +1,6 @@
 package by.bsuir.kaziukovich.oop.logic.command.impl;
 
+import by.bsuir.kaziukovich.oop.consoleview.Logger;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
@@ -33,6 +34,12 @@ public class AddBookCommand implements Command {
                     BookType.valueOf(request[3].toUpperCase()));
         } catch (ExistanceException e) {
             throw new CommandException("Error executing AddBook command", e);
+        }
+
+        try {
+            new UpdateBooksCommand().execute(null);
+        } catch (CommandException e) {
+            Logger.log(e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
