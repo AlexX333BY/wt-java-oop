@@ -1,6 +1,5 @@
 package by.bsuir.kaziukovich.oop.logic.command.impl;
 
-import by.bsuir.kaziukovich.oop.consoleview.Logger;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
@@ -35,12 +34,6 @@ public class AddUserCommand implements Command {
                     PasswordDigestGeneratorFactory.getPasswordDigestGenerator().generate(request[1]));
         } catch (ExistanceException | PasswordDigestException e) {
             throw new CommandException("Error executing AddUser command", e);
-        }
-
-        try {
-            new UpdateUsersCommand().execute(null);
-        } catch (CommandException e) {
-            Logger.log(e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
