@@ -1,5 +1,6 @@
 package by.bsuir.kaziukovich.oop.consoleview;
 
+import by.bsuir.kaziukovich.oop.consoleview.impl.ConsolePagePrinter;
 import by.bsuir.kaziukovich.oop.consoleview.impl.ConsoleScanner;
 import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerFactory;
@@ -7,6 +8,7 @@ import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
 import by.bsuir.kaziukovich.oop.logger.Logger;
 import by.bsuir.kaziukovich.oop.logic.command.CommandName;
+import java.util.Arrays;
 
 /**
  * Main class for running application in several modes: data loading, logging and main working mode
@@ -109,17 +111,17 @@ public class WorkingModesSwitcher {
         Controller usingController = ControllerFactory.getUsingController();
         String input;
         String[] response;
-        int responseCount;
 
         do {
+            System.out.print("Enter your command: ");
             input = ConsoleScanner.getNonEmptyString();
             if (input.equals(EXIT_COMMAND)) {
                 shouldWork = false;
             } else {
                 try {
                     response = usingController.process(username, input);
-                    for (responseCount = 1; responseCount < response.length; ++responseCount) {
-                        System.out.println(response[responseCount]);
+                    if (response.length > 1) {
+                        ConsolePagePrinter.PrintByPages(Arrays.copyOfRange(response, 1, response.length));
                     }
                 } catch (ProcessException e) {
                     System.out.println("Error processing request, try again");
@@ -140,7 +142,6 @@ public class WorkingModesSwitcher {
         loadData();
         while (true) {
             login();
-            System.out.println("Enter your commands:");
             work();
         }
     }
