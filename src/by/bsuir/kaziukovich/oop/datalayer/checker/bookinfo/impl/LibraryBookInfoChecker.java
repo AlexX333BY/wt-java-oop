@@ -82,6 +82,8 @@ public class LibraryBookInfoChecker implements BookInfoChecker {
                 return false;
             }
             indent = 1;
+        } else {
+            isbnLength = 3;
         }
 
         for (String s : splittedIsbn) {
