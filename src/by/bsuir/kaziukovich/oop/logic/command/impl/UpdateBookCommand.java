@@ -18,7 +18,7 @@ public class UpdateBookCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data. 4 strings required: title, author, ISBN, book type
+     * @param request Command request data. 4 strings required: ISBN, author, title, book type
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
@@ -29,7 +29,7 @@ public class UpdateBookCommand implements Command {
         }
 
         try {
-            BookDaoFactory.getBookDao().updateBook(request[0], request[1], request[2],
+            BookDaoFactory.getBookDao().updateBook(request[0], request[2], request[1],
                     BookType.valueOf(request[3].toUpperCase()));
         } catch (ExistanceException e) {
             throw new CommandException("Error executing UpdateBook command", e);
