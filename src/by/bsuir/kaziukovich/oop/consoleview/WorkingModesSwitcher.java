@@ -107,6 +107,8 @@ public class WorkingModesSwitcher {
         boolean shouldWork = true;
         Controller usingController = ControllerFactory.getUsingController();
         String input;
+        String[] response;
+        int responseCount;
 
         do {
             input = ConsoleScanner.getNonEmptyString();
@@ -114,7 +116,10 @@ public class WorkingModesSwitcher {
                 shouldWork = false;
             } else {
                 try {
-                    usingController.process(username, input);
+                    response = usingController.process(username, input);
+                    for (responseCount = 1; responseCount < response.length; ++responseCount) {
+                        System.out.println(response[responseCount]);
+                    }
                 } catch (ProcessException e) {
                     System.out.println("Error processing request, try again");
                     Logger.log(e);
