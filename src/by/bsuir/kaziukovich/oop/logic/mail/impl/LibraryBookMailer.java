@@ -72,7 +72,7 @@ public class LibraryBookMailer implements BookMailer {
             Logger.log(e);
         }
 
-        properties.setProperty("localhost", hostname);
+        properties.setProperty("mail.smtp.host", hostname);
         message = new MimeMessage(Session.getDefaultInstance(properties));
         messageText = createStringRepresentation(mainMessageObject);
         if (additionalMessage != null) {
