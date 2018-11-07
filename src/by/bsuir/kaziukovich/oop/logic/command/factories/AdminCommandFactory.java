@@ -13,7 +13,7 @@ public class AdminCommandFactory {
     /**
      * Command type and implementation accordance map
      */
-    private static Map<CommandName, Command> commands = createCommandMap();
+    private static final Map<CommandName, Command> commands = createCommandMap();
 
     /**
      * Method for getting command type and implementation accordance map

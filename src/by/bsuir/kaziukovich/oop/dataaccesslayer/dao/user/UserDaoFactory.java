@@ -9,7 +9,7 @@ public class UserDaoFactory {
     /**
      * Single UserDao instance
      */
-    private static UserDao userDao = new LibraryUserDao();
+    private static final UserDao userDao = new LibraryUserDao();
 
     /**
      * Generates and returns UserDao instance

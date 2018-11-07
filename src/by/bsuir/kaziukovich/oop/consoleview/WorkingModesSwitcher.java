@@ -91,7 +91,7 @@ public class WorkingModesSwitcher {
                 isLogined = loginController.process(enteredUsername, enteredPassword)[0]
                         .equals(ControllerResponse.SUCCESS_RESPONSE);
                 if (!isLogined) {
-                    System.out.println("Wring password, try again: ");
+                    System.out.println("Wrong password, try again: ");
                 }
             } catch (ProcessException e) {
                 isLogined = false;

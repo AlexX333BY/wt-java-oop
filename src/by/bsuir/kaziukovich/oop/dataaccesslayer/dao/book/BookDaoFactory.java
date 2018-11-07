@@ -9,7 +9,7 @@ public class BookDaoFactory {
     /**
      * Single BookDao instance
      */
-    private static BookDao bookDao = new LibraryBookDao();
+    private static final BookDao bookDao = new LibraryBookDao();
 
     /**
      * Generates and returns BookDao instance
