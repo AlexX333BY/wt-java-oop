@@ -35,6 +35,11 @@ public enum CommandName {
     GET_ALL_BOOKS,
 
     /**
+     * Searches for book
+     */
+    SEARCH_BOOK,
+
+    /**
      * Loads all users data from file
      */
     LOAD_USERS,

@@ -2,7 +2,6 @@ package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
-import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
@@ -20,7 +19,7 @@ public class GetAllBooksCommand implements Command {
     /**
      * Required arguments count for command
      */
-    public static final byte REQUIRED_ARGUMENTS = 0;
+    public static final byte REQUIRED_ARGUMENTS = 1;
 
     /**
      * Default lines delimiter
@@ -48,7 +47,7 @@ public class GetAllBooksCommand implements Command {
         for (int i = 1; i < result.length; i++) {
             curBook = books.get(i - 1);
             result[i] = curBook.getAuthor() + delimiter + curBook.getTitle() + delimiter + curBook.getIsbn()
-                    + delimiter + (curBook.getBookType() == BookType.DIGITAL ? "Digital book" : "Paper book");
+                    + delimiter + curBook.getBookType().toString();
         }
 
         return result;

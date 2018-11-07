@@ -32,6 +32,7 @@ public class AdminCommandFactory {
         result.put(CommandName.UPDATE_USER_PASSWORD, new UpdateUserPasswordCommand());
         result.put(CommandName.UPDATE_USER_ROLE, new UpdateUserRoleCommand());
         result.put(CommandName.UPDATE_USERS, new UpdateUsersCommand());
+        result.put(CommandName.SEARCH_BOOK, new SearchBookCommand());
         return result;
     }
 
