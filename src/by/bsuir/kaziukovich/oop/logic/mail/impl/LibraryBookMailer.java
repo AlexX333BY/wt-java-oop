@@ -33,32 +33,30 @@ public class LibraryBookMailer implements BookMailer {
 
     /**
      * Mails to single destination
-     * @param sender            Mail sender
      * @param destination       Mail destination
      * @param subject           Mail subject
      * @param mainMessageObject Mail message object
      * @param additionalMessage Additional text message, can be null
      */
     @Override
-    public void mailTo(String sender, String destination, String subject, BookInfo mainMessageObject,
-                       String additionalMessage) throws MailerException {
+    public void mailTo(String destination, String subject, BookInfo mainMessageObject, String additionalMessage)
+            throws MailerException {
         ArrayList<String> destinations = new ArrayList<>();
 
         destinations.add(destination);
-        mailTo(sender, destinations, subject, mainMessageObject, additionalMessage);
+        mailTo(destinations, subject, mainMessageObject, additionalMessage);
     }
 
     /**
      * Mails to multiple destinations
-     * @param sender            Mail sender
      * @param destinations      Mail destination
      * @param subject           Mail subject
      * @param mainMessageObject Mail message object
      * @param additionalMessage Additional text message, can be null
      */
     @Override
-    public void mailTo(String sender, List<String> destinations, String subject, BookInfo mainMessageObject,
-                       String additionalMessage) throws MailerException {
+    public void mailTo(List<String> destinations, String subject, BookInfo mainMessageObject, String additionalMessage)
+            throws MailerException {
         Properties properties = System.getProperties();
         Session session;
         String hostname;
@@ -81,7 +79,6 @@ public class LibraryBookMailer implements BookMailer {
                 messageText = additionalMessage + "\n\n" + messageText;
             }
 
-            message.setFrom(sender);
             for (String destination : destinations) {
                 try {
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
@@ -92,7 +89,7 @@ public class LibraryBookMailer implements BookMailer {
             message.setText(messageText);
             Transport.send(message);
         } catch (MessagingException e) {
-            Logger.log(e);
+            throw new MailerException("Error sending mails with subject " + subject, e);
         }
     }
 }
