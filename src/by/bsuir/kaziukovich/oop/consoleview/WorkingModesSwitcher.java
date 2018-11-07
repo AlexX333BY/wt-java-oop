@@ -6,7 +6,7 @@ import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerFactory;
 import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
-import by.bsuir.kaziukovich.oop.logger.Logger;
+import by.bsuir.kaziukovich.oop.domain.logger.Logger;
 import by.bsuir.kaziukovich.oop.logic.command.CommandName;
 
 import java.io.FileNotFoundException;

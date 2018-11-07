@@ -1,7 +1,7 @@
 package by.bsuir.kaziukovich.oop.logic.mail.impl;
 
-import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
-import by.bsuir.kaziukovich.oop.logger.Logger;
+import by.bsuir.kaziukovich.oop.domain.info.book.BookInfo;
+import by.bsuir.kaziukovich.oop.domain.logger.Logger;
 import by.bsuir.kaziukovich.oop.logic.mail.BookMailer;
 import by.bsuir.kaziukovich.oop.logic.mail.MailerException;
 import javax.mail.Message;

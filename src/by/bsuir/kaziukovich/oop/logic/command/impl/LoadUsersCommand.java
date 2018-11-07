@@ -1,7 +1,7 @@
 package by.bsuir.kaziukovich.oop.logic.command.impl;
 
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.StorageException;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
+import by.bsuir.kaziukovich.oop.dataaccess.dao.StorageException;
+import by.bsuir.kaziukovich.oop.dataaccess.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;

@@ -1,10 +1,10 @@
 package by.bsuir.kaziukovich.oop.logic.command.impl;
 
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
-import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
-import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
-import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
+import by.bsuir.kaziukovich.oop.dataaccess.dao.ExistanceException;
+import by.bsuir.kaziukovich.oop.dataaccess.dao.book.BookDaoFactory;
+import by.bsuir.kaziukovich.oop.dataaccess.dao.user.UserDaoFactory;
+import by.bsuir.kaziukovich.oop.domain.info.book.BookType;
+import by.bsuir.kaziukovich.oop.domain.info.user.UserInfo;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
