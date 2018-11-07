@@ -1,6 +1,6 @@
 package by.bsuir.kaziukovich.oop.controller.login.impl;
 
-import by.bsuir.kaziukovich.oop.consoleview.Logger;
+import by.bsuir.kaziukovich.oop.logger.Logger;
 import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
