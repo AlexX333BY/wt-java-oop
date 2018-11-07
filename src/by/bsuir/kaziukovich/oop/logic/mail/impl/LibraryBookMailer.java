@@ -2,7 +2,7 @@ package by.bsuir.kaziukovich.oop.logic.mail.impl;
 
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookInfo;
 import by.bsuir.kaziukovich.oop.logger.Logger;
-import by.bsuir.kaziukovich.oop.logic.mail.Mailer;
+import by.bsuir.kaziukovich.oop.logic.mail.BookMailer;
 import by.bsuir.kaziukovich.oop.logic.mail.MailerException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * Mailer implementation for BookInfoClass
  */
-public class BookMailer implements Mailer<BookInfo> {
+public class LibraryBookMailer implements BookMailer {
     /**
      * Generates string representation of book to send by mail
      * @param book Book to create representation by
