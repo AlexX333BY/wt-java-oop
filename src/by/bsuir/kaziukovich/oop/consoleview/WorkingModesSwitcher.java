@@ -8,6 +8,9 @@ import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
 import by.bsuir.kaziukovich.oop.logger.Logger;
 import by.bsuir.kaziukovich.oop.logic.command.CommandName;
+
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 /**
@@ -121,7 +124,7 @@ public class WorkingModesSwitcher {
                 try {
                     response = usingController.process(username, input);
                     if (response.length > 1) {
-                        ConsolePagePrinter.PrintByPages(Arrays.copyOfRange(response, 1, response.length));
+                        ConsolePagePrinter.printByPages(Arrays.copyOfRange(response, 1, response.length));
                     }
                 } catch (ProcessException e) {
                     System.out.println("Error processing request, try again");
@@ -139,6 +142,22 @@ public class WorkingModesSwitcher {
      * @param args CLI arguments, not in use
      */
     public static void main(String[] args) {
+        if (args.length > 0) {
+            try {
+                ConsolePagePrinter.setLinesCount(Byte.parseByte(args[0]));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Cannot set " + args[0] + " as console lines count, using default value");
+            }
+        }
+
+        if (args.length > 1) {
+            try {
+                Logger.setErrorStream(new PrintStream(args[1]));
+            } catch (FileNotFoundException | SecurityException e) {
+                System.out.println("Cannot set " + args[1] + " as logger stream, using default value");
+            }
+        }
+
         loadData();
         while (true) {
             login();

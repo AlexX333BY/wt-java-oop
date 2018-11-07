@@ -27,7 +27,7 @@ public class ConsolePagePrinter {
      * Prints string entries by pages
      * @param entries String entries
      */
-    public static void PrintByPages(String[] entries) {
+    public static void printByPages(String[] entries) {
         ArrayList<String> lines = new ArrayList<>();
         byte linesCount = (byte) (consoleLinesCount - 1);
 
