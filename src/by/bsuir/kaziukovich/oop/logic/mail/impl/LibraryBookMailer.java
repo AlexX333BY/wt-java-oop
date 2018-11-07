@@ -8,7 +8,6 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.net.InetAddress;
@@ -58,8 +57,13 @@ public class LibraryBookMailer implements BookMailer {
     public void mailTo(List<String> destinations, String subject, BookInfo mainMessageObject, String additionalMessage)
             throws MailerException {
         Properties properties = System.getProperties();
-        Session session;
+        String messageText;
+        MimeMessage message;
         String hostname;
+
+        if ((destinations == null) || (subject == null) || (mainMessageObject == null)) {
+            throw new IllegalArgumentException("All but additionalMessage arguments shouldn't be null");
+        }
 
         try {
             hostname = InetAddress.getLocalHost().getHostName();
@@ -68,28 +72,27 @@ public class LibraryBookMailer implements BookMailer {
             Logger.log(e);
         }
 
-        properties.setProperty("mail.smtp.host", hostname);
-        session = Session.getDefaultInstance(properties);
+        properties.setProperty("localhost", hostname);
+        message = new MimeMessage(Session.getDefaultInstance(properties));
+        messageText = createStringRepresentation(mainMessageObject);
+        if (additionalMessage != null) {
+            messageText = additionalMessage + "\n\n" + messageText;
+        }
 
         try {
-            MimeMessage message = new MimeMessage(session);
-            String messageText = createStringRepresentation(mainMessageObject);
-
-            if (additionalMessage != null) {
-                messageText = additionalMessage + "\n\n" + messageText;
-            }
-
-            for (String destination : destinations) {
-                try {
-                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(destination));
-                } catch (AddressException ignored) { }
-            }
-
             message.setSubject("Book addition");
             message.setText(messageText);
-            Transport.send(message);
         } catch (MessagingException e) {
             throw new MailerException("Error sending mails with subject " + subject, e);
+        }
+
+        for (String destination : destinations) {
+            try {
+                message.setRecipient(Message.RecipientType.TO, new InternetAddress(destination));
+                Transport.send(message);
+            } catch (MessagingException e) {
+                Logger.log(new MailerException("Error sending mail to user " + destination, e));
+            }
         }
     }
 }
