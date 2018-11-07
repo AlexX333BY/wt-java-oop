@@ -3,6 +3,8 @@ package by.bsuir.kaziukovich.oop.logic.command.factories;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandName;
 import by.bsuir.kaziukovich.oop.logic.command.impl.GetAllBooksCommand;
+import by.bsuir.kaziukovich.oop.logic.command.impl.SuggestBookCommand;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class UserCommandFactory {
         Map<CommandName, Command> result = new HashMap<>();
 
         result.put(CommandName.GET_ALL_BOOKS, new GetAllBooksCommand());
+        result.put(CommandName.ADD_BOOK, new SuggestBookCommand());
         return result;
     }
 
