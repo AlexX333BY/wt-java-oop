@@ -46,8 +46,8 @@ public class GetAllBooksCommand implements Command {
 
         for (int i = 1; i < result.length; i++) {
             curBook = books.get(i - 1);
-            result[i] = curBook.getAuthor() + delimiter + curBook.getTitle() + delimiter + curBook.getIsbn()
-                    + delimiter + curBook.getBookType().toString();
+            result[i] = "Author: " + curBook.getAuthor() + delimiter + "Title: " + curBook.getTitle() + delimiter
+                    + "ISBN: " +  curBook.getIsbn() + delimiter + "Book type: " + curBook.getBookType().toString();
         }
 
         return result;

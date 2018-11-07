@@ -53,8 +53,8 @@ public class SearchBookCommand implements Command {
                     || (book.getBookType().toString().toLowerCase().contains(searchPart))
                     || (book.getIsbn().toLowerCase().contains(searchPart))
                     || (book.getTitle().toLowerCase().contains(searchPart))) {
-                listResult.add(book.getAuthor() + delimiter + book.getTitle() + delimiter + book.getIsbn() + delimiter
-                        + book.getBookType().toString());
+                listResult.add("Author: " + book.getAuthor() + delimiter + "Title: " + book.getTitle() + delimiter
+                        + "ISBN: " +  book.getIsbn() + delimiter + "Book type: " + book.getBookType().toString());
             }
         }
 
