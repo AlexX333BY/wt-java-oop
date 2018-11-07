@@ -34,7 +34,8 @@ public class SuggestBookCommand implements Command {
             throw new IllegalArgumentException(REQUIRED_ARGUMENTS + "arguments required");
         }
 
-        newBookInfo = BookInfoFactory.createNew(request[1], request[0], request[2], BookType.valueOf(request[3]));
+        newBookInfo = BookInfoFactory.createNew(request[1], request[0], request[2],
+                BookType.valueOf(request[3].toUpperCase()));
 
         for (UserInfo user : UserDaoFactory.getUserDao().getAll()) {
             if (user.getUserRole() == UserRole.ADMIN) {
