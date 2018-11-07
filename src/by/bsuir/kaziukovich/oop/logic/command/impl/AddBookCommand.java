@@ -2,10 +2,16 @@ package by.bsuir.kaziukovich.oop.logic.command.impl;
 
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.ExistanceException;
 import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.book.BookDaoFactory;
+import by.bsuir.kaziukovich.oop.dataaccesslayer.dao.user.UserDaoFactory;
 import by.bsuir.kaziukovich.oop.datalayer.info.book.BookType;
+import by.bsuir.kaziukovich.oop.datalayer.info.user.UserInfo;
 import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
+import by.bsuir.kaziukovich.oop.logic.mail.MailerException;
+import by.bsuir.kaziukovich.oop.logic.mail.MailerFactory;
+
+import java.util.ArrayList;
 
 /**
  * Command for adding new book
@@ -18,21 +24,36 @@ public class AddBookCommand implements Command {
 
     /**
      * Command execution method
-     * @param request Command request data. 4 strings required: title, author, ISBN, book type
+     * @param request Command request data. 4 strings required: author, title, ISBN, book type
      * @return Command response
      * @throws CommandException In case of any command execution error
      */
     @Override
     public String[] execute(String[] request) throws CommandException {
+        ArrayList<String> usernames = new ArrayList<>();
+
         if ((request == null) || (request.length != REQUIRED_ARGUMENTS)) {
             throw new IllegalArgumentException(REQUIRED_ARGUMENTS + "arguments required");
         }
 
         try {
-            BookDaoFactory.getBookDao().addNewBook(request[0], request[1], request[2],
+            BookDaoFactory.getBookDao().addNewBook(request[1], request[0], request[2],
                     BookType.valueOf(request[3].toUpperCase()));
         } catch (ExistanceException e) {
             throw new CommandException("Error executing AddBook command", e);
+        }
+
+        for (UserInfo user : UserDaoFactory.getUserDao().getAll()) {
+            usernames.add(user.getUsername());
+        }
+
+        try {
+            if (usernames.size() > 0) {
+                MailerFactory.getBookMailer().mailTo(usernames, "Book addition",
+                        BookDaoFactory.getBookDao().get(request[2]), "New book added");
+            }
+        } catch (MailerException | ExistanceException e) {
+            throw new CommandException("Error executing AddBook command (notification part)", e);
         }
 
         return new String[] { CommandResponse.SUCCESS_RESPONSE };
