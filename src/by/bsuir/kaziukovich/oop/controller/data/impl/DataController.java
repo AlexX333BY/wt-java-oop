@@ -4,6 +4,7 @@ import by.bsuir.kaziukovich.oop.controller.Controller;
 import by.bsuir.kaziukovich.oop.controller.ControllerResponse;
 import by.bsuir.kaziukovich.oop.controller.ProcessException;
 import by.bsuir.kaziukovich.oop.controller.impl.RequestSplitter;
+import by.bsuir.kaziukovich.oop.logic.command.Command;
 import by.bsuir.kaziukovich.oop.logic.command.CommandException;
 import by.bsuir.kaziukovich.oop.logic.command.CommandResponse;
 import by.bsuir.kaziukovich.oop.logic.command.factories.DataCommandFactory;
@@ -23,22 +24,29 @@ public class DataController implements Controller {
     @Override
     public String[] process(String username, String request) throws ProcessException {
         String[] splittedRequest;
+        Command executionCommand;
+        String[] result;
 
         if (request == null) {
             throw new IllegalArgumentException("Request shouldn't be null");
         }
 
         splittedRequest = RequestSplitter.split(request.trim());
-        try {
-            String[] result = DataCommandFactory.getCommand(splittedRequest[0])
-                    .execute(Arrays.copyOfRange(splittedRequest, 1, splittedRequest.length));
+        executionCommand = DataCommandFactory.getCommand(splittedRequest[0]);
 
-            result[0] = (result[0].equals(CommandResponse.SUCCESS_RESPONSE) ? ControllerResponse.SUCCESS_RESPONSE
-                    : ControllerResponse.FAILURE_RESPONSE);
-            return result;
-        } catch (CommandException e) {
-            throw new ProcessException("Error while executing data command", e);
+        if (executionCommand == null) {
+            throw new IllegalArgumentException("Cannot find command " + splittedRequest[0]);
         }
+
+        try {
+            result = executionCommand.execute(Arrays.copyOfRange(splittedRequest, 1, splittedRequest.length));
+        } catch (CommandException e) {
+            throw new ProcessException("Error while executing command", e);
+        }
+
+        result[0] = (result[0].equals(CommandResponse.SUCCESS_RESPONSE) ? ControllerResponse.SUCCESS_RESPONSE
+                : ControllerResponse.FAILURE_RESPONSE);
+        return result;
     }
 
     /**

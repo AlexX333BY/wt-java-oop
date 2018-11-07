@@ -46,6 +46,10 @@ public class UsingController implements Controller {
             throw new ProcessException("Error while acquiring command", e);
         }
 
+        if (executionCommand == null) {
+            throw new IllegalArgumentException("Cannot find command " + splittedRequest[0]);
+        }
+
         try {
             result = executionCommand.execute(Arrays.copyOfRange(splittedRequest, 1, splittedRequest.length));
         } catch (CommandException e) {
